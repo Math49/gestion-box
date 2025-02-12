@@ -18,6 +18,19 @@
 
                 <h2 class="text-2xl font-semibold text-gray-800 mb-6">Détails de la box</h2>
 
+                <!-- Statut de la box -->
+                <div class="mb-4">
+                    @if ($box->ID_locataire)
+                        <span class="inline-block bg-red-500 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                            Loué
+                        </span>
+                    @else
+                        <span class="inline-block bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                            Libre
+                        </span>
+                    @endif
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <p class="text-lg font-medium text-gray-700">📦 <strong>Nom :</strong> {{ $box->Nom }}</p>
