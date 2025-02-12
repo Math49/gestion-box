@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('Lien',255);
             $table->date('Date_creation');
             $table->decimal('Montant', 15, 2);
-            $table->foreignId('ID_locataire')->constrained('locataires', 'ID_locataire');
-            $table->foreignId('ID_user')->constrained('users', 'ID_user');
+            $table->foreignId('ID_locataire')->references('ID_locataire')->on('locataires');
+            $table->foreignId('ID_user')->references('ID_user')->on('users');
             $table->timestamps();
         });
     }

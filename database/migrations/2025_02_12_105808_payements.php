@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('payements', function (Blueprint $table) {
             $table->id('ID_payement');
             $table->date('Date_payement');
-            $table->foreignId('ID_User')->constrained('users', 'ID_user');
-            $table->foreignId('ID_locataire')->constrained('locataires', 'ID_locataire');
+            $table->foreignId('ID_User')->references('ID_User')->on('users');
+            $table->foreignId('ID_locataire')->references('ID_locataire')->on('locataires');
             $table->timestamps();
         });
     }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('Telephone', 20)->nullable();
             $table->string('Email', 255);
             $table->string('bancaire', 255);
-            $table->foreignId('ID_user')->constrained('users', 'ID_user');
+            $table->foreignId('ID_user')->references('ID_user')->on('users');
             $table->timestamps();
         });
     }

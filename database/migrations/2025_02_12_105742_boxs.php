@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('boxs', function (Blueprint $table) {
-            $table->id();
+            $table->id('ID_box');
             $table->string('Nom', 50);
             $table->string('Adresse', 255)->nullable();
             $table->text('Description')->nullable();
             $table->string('Type', 50);
-            $table->foreignId('ID_locataire')->constrained('locataires', 'ID_locataire');
-            $table->foreignId('ID_user')->constrained('users', 'ID_user');
+            $table->foreignId('ID_locataire')->references('ID_locataire')->on('locataires');
+            $table->foreignId('ID_user')->references('ID_user')->on('users');
             $table->timestamps();
         });
     }

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('Lien',255);
             $table->date('Date_debut');
             $table->date('Date_fin')->nullable();
-            $table->foreignId('ID_locataire')->constrained('locataires', 'ID_locataire');
-            $table->foreignId('ID_box')->constrained('boxs', 'ID_box');
-            $table->foreignId('ID_user')->constrained('users', 'ID_user');
+            $table->foreignId('ID_locataire')->references('ID_locataire')->on('locataires');
+            $table->foreignId('ID_box')->references('ID_box')->on('boxs');
+            $table->foreignId('ID_user')->references('ID_user')->on('users');
             $table->timestamps();
         });
     }
