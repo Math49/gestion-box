@@ -38,11 +38,72 @@ class BoxController extends Controller
                 'Adresse' => $request->input('address'),
                 'Description' => $request->input('description'),
                 'Type' => $request->input('type'),
+                'Prix' => $request->input('price'),
                 'ID_user' => $user->ID_user
             ]);
 
             $box->save();
             return redirect()->route('dashboard');
+
+        }catch(Exception $e){
+            return redirect()->back()->with('error', 'An error occurred');
+        }
+    }
+
+    public function viewBox(Request $request, $id)
+    {
+        try{
+            $box = Box::find($id);
+
+            return view('boxView', [
+                'box' => $box
+            ]);
+        }catch(Exception $e){
+            return redirect()->back()->with('error', 'An error occurred');
+        }
+    }
+
+    // PUT /box/{id}
+    public function editBox(Request $request, $id)
+    {
+        try{
+
+            $box = Box::find($id);
+            
+            if($box == null){
+                return redirect()->back()->with('error', 'Box not found');
+            }
+            
+            $box->Nom = $request->input('name') ? $request->input('name') : $box->Nom;
+            $box->Adresse = $request->input('address') ? $request->input('address') : $box->Adresse;
+            $box->Description = $request->input('description') ? $request->input('description') : $box->Description;
+            $box->Type = $request->input('type');
+            $box->Prix = $request->input('price') ? $request->input('price') : $box->Prix;
+
+            $box->save();
+
+            return redirect()->route('dashboard')->with('success', 'Box updated successfully');
+
+
+        }catch(Exception $e){
+            return redirect()->back()->with('error', 'An error occurred');
+        }
+    }
+
+    // DELETE /box/{id}
+    public function deleteBox($id)
+    {
+        try{
+
+            $box = Box::find($id);
+            
+            if($box == null){
+                return redirect()->back()->with('error', 'Box not found');
+            }
+
+            $box->delete();
+
+            return redirect()->route('dashboard')->with('success', 'Box deleted successfully');
 
         }catch(Exception $e){
             return redirect()->back()->with('error', 'An error occurred');

@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function (){
     Route::get('/dashboard', [BoxController::class, 'BoxsByUser'])->name('dashboard');
     Route::get('/box/add', [BoxController::class, 'createBox'])->name('box.add');
     Route::post('/box/add', [BoxController::class, 'storeBox'])->name('box.create');
+    Route::get('/box/{id}', [BoxController::class, 'viewBox'])->name('box.view');
 });
 
 require __DIR__.'/auth.php';

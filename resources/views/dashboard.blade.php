@@ -17,9 +17,9 @@
                                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                     <div class="p-6 text-gray-900">
                                         <h4>{{ $box->Nom }}</h4>
-                                        <p>{{ $box->Description }}</p>
+                                        <p>{{ $box->Prix }}€</p>
                                         <p>{{ $box->Type }}</p>
-                                        <a href="" class="text-blue-500">Voir</a>
+                                        <a href="{{route('box.view', $box->ID_box)}}" class="text-blue-500">Voir</a>
                                     </div>
                                 </div>
                             @endforeach

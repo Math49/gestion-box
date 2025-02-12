@@ -17,6 +17,7 @@ class Box extends Model
         'Adresse',
         'Description',
         'Type',
+        'Prix',
         'ID_locataire',
         'ID_user',
     ];
