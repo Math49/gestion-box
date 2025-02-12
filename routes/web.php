@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function (){
-    Route::get('/locataires', [LocataireController::class, 'index'])->name('locataires.index');
+    
 });
 
 require __DIR__.'/auth.php';
