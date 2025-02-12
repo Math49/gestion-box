@@ -6,14 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocataireController;
 use App\Http\Controllers\BoxController;
 use App\Http\Controllers\UserController;
+use App\Models\Box;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -23,7 +20,9 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware('auth')->group(function (){
-    
+    Route::get('/dashboard', [BoxController::class, 'BoxsByUser'])->name('dashboard');
+    Route::get('/box/add', [BoxController::class, 'createBox'])->name('box.add');
+    Route::post('/box/add', [BoxController::class, 'storeBox'])->name('box.create');
 });
 
 require __DIR__.'/auth.php';

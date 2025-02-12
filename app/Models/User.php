@@ -52,7 +52,7 @@ class User extends Authenticatable
     /**
      * Get the boxes for the user.
      */
-    public function boxes()
+    public function boxs()
     {
         return $this->hasMany(Box::class, 'ID_user', 'ID_user');
     }

@@ -10,6 +10,7 @@ class Box extends Model
     use HasFactory;
 
     protected $primaryKey = 'ID_box';
+    protected $table = 'boxs';
 
     protected $fillable = [
         'Nom',
