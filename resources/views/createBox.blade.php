@@ -1,50 +1,71 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <h2 class="font-semibold text-xl text-gray-800 leading-tigh">Ajoutez une box</h2>
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-lg rounded-xl p-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6">Ajoutez une box</h2>
 
-                    <form action="{{ route('box.create') }}" method="POST">
-                        @csrf
-                        <div class="mb-4">
-                            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nom:</label>
-                            <input type="text" name="name" id="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <form action="{{ route('box.create') }}" method="POST">
+                    @csrf
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Nom -->
+                        <div>
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Nom:</label>
+                            <input type="text" name="name" id="name"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                required>
                         </div>
-                        <div class="mb-4">
-                            <label for="address" class="block text-gray-700 text-sm font-bold mb-2">Adresse:</label>
-                            <input type="text" name="address" id="address" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+
+                        <!-- Adresse -->
+                        <div>
+                            <label for="address" class="block text-gray-700 font-medium mb-2">Adresse:</label>
+                            <input type="text" name="address" id="address"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                required>
                         </div>
-                        <div class="mb-4">
-                            <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
-                            <textarea name="description" id="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+
+                        <!-- Prix -->
+                        <div>
+                            <label for="price" class="block text-gray-700 font-medium mb-2">Prix (€):</label>
+                            <input type="number" name="price" id="price" min="0" step="0.01"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                required>
                         </div>
-                        <div class="mb-4">
-                            <label for="price" class="block text-gray-700 text-sm font-bold mb-2">Prix:</label>
-                            <input type="number" name="price" id="price" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="type" class="block text-gray-700 text-sm font-bold mb-2">Type:</label>
-                            <select name="type" id="type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+
+                        <!-- Type -->
+                        <div>
+                            <label for="type" class="block text-gray-700 font-medium mb-2">Type:</label>
+                            <select name="type" id="type"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                required>
                                 <option value="standard">Standard</option>
                                 <option value="refrigere">Réfrigéré</option>
                                 <option value="double">Double</option>
                             </select>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                Ajouter
-                            </button>
+
+                        <!-- Description -->
+                        <div class="sm:col-span-2">
+                            <label for="description" class="block text-gray-700 font-medium mb-2">Description:</label>
+                            <textarea name="description" id="description" rows="4"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                required></textarea>
                         </div>
-                    </form>
-                    
-                </div>
+                    </div>
+
+                    <!-- Bouton -->
+                    <div class="mt-6 flex justify-end">
+                        <button type="submit"
+                            class="!bg-blue-500 hover:!bg-blue-700 text-white font-semibold !px-6 !py-3 !rounded-lg !shadow-md !transition !duration-300">
+                            Ajouter la box
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
