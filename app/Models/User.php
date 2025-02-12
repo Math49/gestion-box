@@ -45,4 +45,29 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the boxes for the user.
+     */
+    public function boxes()
+    {
+        return $this->hasMany(Box::class, 'ID_user', 'ID_user');
+    }
+    public function locataires()
+    {
+        return $this->hasMany(Locataire::class, 'ID_user', 'ID_user');
+    }
+    public function payements()
+    {
+        return $this->hasMany(Payement::class, 'ID_user', 'ID_user');
+    }
+    public function factures()
+    {
+        return $this->hasMany(Facture::class, 'ID_user', 'ID_user');
+    }
+    public function contrats()
+    {
+        return $this->hasMany(Contrat::class, 'ID_user', 'ID_user');
+    }
+
 }
