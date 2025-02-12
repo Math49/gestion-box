@@ -9,6 +9,8 @@ class Box extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'ID_box';
+
     protected $fillable = [
         'Nom',
         'Adresse',

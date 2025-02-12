@@ -9,6 +9,8 @@ class Locataire extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'ID_locataire';
+
     protected $fillable = [
         'Nom',
         'Prenom',

@@ -9,6 +9,8 @@ class Contrat extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'ID_contrat';
+
     protected $fillable = [
         'Date_debut',
         'Date_fin',

@@ -9,6 +9,8 @@ class Payement extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'ID_payement';
+
     protected $fillable = [
         'Date_payement',
         'ID_locataire',

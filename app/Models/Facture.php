@@ -9,6 +9,8 @@ class Facture extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'ID_facture';
+
     protected $fillable = [
         'Date_facture',
         'Montant',
