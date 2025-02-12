@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('Adresse', 255)->nullable();
             $table->text('Description')->nullable();
             $table->string('Type', 50);
-            $table->foreignId('ID_locataire')->references('ID_locataire')->on('locataires');
+            $table->foreignId('ID_locataire')->nullable()->references('ID_locataire')->on('locataires');
             $table->foreignId('ID_user')->references('ID_user')->on('users');
             $table->timestamps();
         });
