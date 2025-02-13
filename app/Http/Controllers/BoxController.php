@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 
 use App\Models\Box;
+use App\Models\Locataire;
 
 class BoxController extends Controller
 {
@@ -114,6 +115,32 @@ class BoxController extends Controller
         }catch(Exception $e){
             return redirect()->back()->with('error', 'An error occurred');
         }
+    }
+
+    public function updateBoxLocataire(Request $request, $id)
+    {
+        $request->validate([
+            'ID_box' => 'nullable|exists:boxs,ID_box',
+        ]);
+
+        $locataire = Locataire::find($id);
+        if ($locataire->boxs()->exists()) {
+            $firstBox = $locataire->boxs()->first();
+            $firstBox->ID_locataire = null;
+            $firstBox->save();
+        }
+
+        if($request->input('ID_box') == null){
+            return redirect()->back()->with('success', 'Box mise à jour avec succès.');
+        }
+        
+        $box = Box::find($request->input('ID_box'));
+
+        // Mise à jour des box loués
+        $box->ID_locataire = $id;
+        $box->save();
+
+        return redirect()->back()->with('success', 'Box mise à jour avec succès.');
     }
 
     // DELETE /box/{id}

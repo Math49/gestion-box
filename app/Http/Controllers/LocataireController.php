@@ -9,6 +9,25 @@ use App\Models\Locataire;
 
 class LocataireController extends Controller
 {
+
+    public function LocatairesByUser(Request $request)
+    {
+        try{
+            $user = $request->user();
+            $locataires = $user->locataires;
+            $boxs = $user->boxs;
+            return view('locataireView', [
+                'locataires' => $locataires,
+                'boxs' => $boxs
+            ]);
+        }catch(Exception $e){
+            return redirect()->back()->with('error', 'An error occurred');
+        }
+    }
+
+    
+
+
     public function createLocataire(Request $request)
     {
         try{
@@ -57,6 +76,16 @@ class LocataireController extends Controller
 
             return redirect()->route('dashboard');
 
+        }catch(Exception $e){
+            return redirect()->back()->with('error', 'An error occurred');
+        }
+    }
+
+    public function deleteLocataire(Request $request,$id){
+        try{
+            $locataire = Locataire::find($id);
+            $locataire->delete();
+            return redirect()->route('dashboard');
         }catch(Exception $e){
             return redirect()->back()->with('error', 'An error occurred');
         }

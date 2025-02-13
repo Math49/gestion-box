@@ -26,6 +26,10 @@ Route::middleware('auth')->group(function (){
     Route::get('/box/{id}', [BoxController::class, 'viewBox'])->name('box.view');
     Route::get('/box/{id}/edit', [BoxController::class, 'updateBox'])->name('box.edit');
     Route::put('/box/{id}/edit', [BoxController::class, 'editBox'])->name('box.update');
+
+    Route::get('/locataire', [LocataireController::class, 'LocatairesByUser'])->name('locataire');
+    Route::put('/locataire/{id}/update-box', [BoxController::class, 'updateBoxLocataire'])->name('locataire.updateBox');
+
 });
 
 require __DIR__.'/auth.php';
