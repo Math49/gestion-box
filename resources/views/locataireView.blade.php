@@ -73,9 +73,9 @@
 
                                         <!-- Bouton Modifier -->
                                         <td class="border border-gray-300 px-4 py-2 text-center">
-                                            <a href=""
+                                            <a href="{{route('locataire.view', $locataire->ID_locataire)}}"
                                                 class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded-md shadow transition duration-300">
-                                                ✏️ Modifier
+                                                ✏️ View
                                             </a>
                                         </td>
                                     </tr>

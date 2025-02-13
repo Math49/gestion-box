@@ -30,6 +30,32 @@ class LocataireController extends Controller
         return view('createLocataire');
     }
 
+    public function viewLocataire(Request $request,$id)
+    {
+        try{
+            $locataire = Locataire::find($id);
+            $box = $locataire->box;
+            return view('locataireSolo', [
+                'locataire' => $locataire,
+                'box' => $box
+            ]);
+        }catch(Exception $e){
+            return redirect()->back()->with('error', 'An error occurred');
+        }
+    }
+
+    public function editLocataire(Request $request,$id)
+    {
+        try{
+            $locataire = Locataire::find($id);
+            return view('locataireEdit', [
+                'locataire' => $locataire
+            ]);
+        }catch(Exception $e){
+            return redirect()->back()->with('error', 'An error occurred');
+        }
+    }
+
 
     public function createLocataire(Request $request)
     {
@@ -68,16 +94,16 @@ class LocataireController extends Controller
         try{
             $locataire = Locataire::find($id);
             
-            $locataire->Nom = $request->input('name') ? $request->input('name') : $locataire->Nom;
+            $locataire->Nom = $request->input('nom') ? $request->input('nom') : $locataire->Nom;
             $locataire->Prenom = $request->input('prenom') ? $request->input('prenom') : $locataire->Prenom;
-            $locataire->Adresse = $request->input('address') ? $request->input('address') : $locataire->Adresse;
+            $locataire->Adresse = $request->input('adresse') ? $request->input('adresse') : $locataire->Adresse;
             $locataire->Telephone = $request->input('telephone') ? $request->input('telephone') : $locataire->Telephone;
             $locataire->Email = $request->input('email') ? $request->input('email') : $locataire->Email;
             $locataire->bancaire = $request->input('bancaire') ? $request->input('bancaire') : $locataire->bancaire;
 
             $locataire->save();
 
-            return redirect()->route('dashboard');
+            return redirect()->route('locataire.view', ['id' => $id]);
 
         }catch(Exception $e){
             return redirect()->back()->with('error', 'An error occurred');

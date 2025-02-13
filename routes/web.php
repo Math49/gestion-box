@@ -31,6 +31,9 @@ Route::middleware('auth')->group(function (){
     Route::put('/locataire/{id}/update-box', [BoxController::class, 'updateBoxLocataire'])->name('locataire.updateBox');
     Route::get('/locataire/create', [LocataireController::class, 'create'])->name('locataire.create');
     Route::post('/locataire/store', [LocataireController::class, 'createLocataire'])->name('locataire.store');
+    Route::get('/locataire/{id}', [LocataireController::class, 'viewLocataire'])->name('locataire.view');
+    Route::get('/locataire/{id}/edit', [LocataireController::class, 'editLocataire'])->name('locataire.edit');
+    Route::put('/locataire/{id}/edit', [LocataireController::class, 'updateLocataire'])->name('locataire.update');
 
 
 });
