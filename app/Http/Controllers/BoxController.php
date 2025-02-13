@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Box;
 use App\Models\Locataire;
+use App\Models\TypeContrat;
 
 class BoxController extends Controller
 {
@@ -14,7 +15,7 @@ class BoxController extends Controller
     {
         try{
             $user = $request->user();
-            $boxs = $user->boxs;
+            $boxs = $user->boxs->with(['typeContrat'])->get();
             return view('dashboard', [
                 'boxs' => $boxs
             ]);
@@ -25,7 +26,11 @@ class BoxController extends Controller
 
     public function createBox()
     {
-        return view('createBox');
+        $typesContrat = TypeContrat::all();
+
+        return view('createBox', [
+            'typesContrat' => $typesContrat
+        ]);
     }
 
     public function updateBox(Request $request,$id){
@@ -49,7 +54,7 @@ class BoxController extends Controller
                 'Nom' => $request->input('name'),
                 'Adresse' => $request->input('address'),
                 'Description' => $request->input('description'),
-                'Type' => $request->input('type'),
+                'ID_typeContrat' => $request->input('type'),
                 'Prix' => $request->input('price'),
                 'ID_user' => $user->ID_user
             ]);
@@ -65,7 +70,7 @@ class BoxController extends Controller
     public function viewBox(Request $request, $id)
     {
         try{
-            $box = Box::find($id);
+            $box = Box::find($id)->with(['typeContrat'])->get();
 
             if($box == null){
                 return redirect()->back()->with('error', 'Box not found');

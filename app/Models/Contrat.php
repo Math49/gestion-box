@@ -10,27 +10,15 @@ class Contrat extends Model
     use HasFactory;
 
     protected $primaryKey = 'ID_contrat';
-
-    protected $fillable = [
-        'Date_debut',
-        'Date_fin',
-        'ID_locataire',
-        'ID_box',
-        'ID_user',
-        'Status',
-        'Lien'
-    ];
+    protected $fillable = ['Date_debut', 'Date_fin', 'ID_locataire', 'ID_box', 'ID_user'];
 
     public function locataire()
     {
         return $this->belongsTo(Locataire::class, 'ID_locataire', 'ID_locataire');
     }
-    public function boxs()
+
+    public function box()
     {
         return $this->belongsTo(Box::class, 'ID_box', 'ID_box');
-    }
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'ID_user', 'ID_user');
     }
 }

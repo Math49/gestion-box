@@ -39,13 +39,16 @@
 
                         <!-- Type -->
                         <div>
-                            <label for="type" class="block text-gray-700 font-medium mb-2">Type:</label>
+                            <label for="type" class="block text-gray-700 font-medium mb-2">Type de contrat:</label>
                             <select name="type" id="type"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
                                 required>
-                                <option value="standard">Standard</option>
-                                <option value="refrigere">Réfrigéré</option>
-                                <option value="double">Double</option>
+                                <option value="">Sélectionnez un type</option>
+
+                                @foreach ($typesContrat as $type)
+                                    <option value="{{ $type->ID_type }}">{{ $type->nom }}</option>
+                                @endforeach
+
                             </select>
                         </div>
 

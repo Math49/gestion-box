@@ -16,7 +16,7 @@ class Box extends Model
         'Nom',
         'Adresse',
         'Description',
-        'Type',
+        'ID_typeContrat',
         'Prix',
         'ID_locataire',
         'ID_user',
@@ -30,5 +30,10 @@ class Box extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'ID_user', 'ID_user');
+    }
+
+    public function typeContrat()
+    {
+        return $this->belongsTo(TypeContrat::class, 'ID_typeContrat', 'ID_typeContrat');
     }
 }

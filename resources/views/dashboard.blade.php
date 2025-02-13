@@ -36,7 +36,7 @@
                                             </div>
                                         </div>
                                         <p class="text-gray-600">💰 <span class="font-medium">{{ $box->Prix }}€</span></p>
-                                        <p class="text-gray-600">📦 <span class="font-medium">{{ $box->Type }}</span></p>
+                                        <p class="text-gray-600">📦 <span class="font-medium">{{ $box->typeContrat->nom }}</span></p>
                                         
                                         <div class="mt-4">
                                     <a href="{{ route('box.view', $box->ID_box) }}"

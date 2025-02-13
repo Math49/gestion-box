@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('Nom', 50);
             $table->string('Adresse', 255)->nullable();
             $table->text('Description')->nullable();
-            $table->string('Type', 50);
+            $table->foreignId('ID_typeContrat')->references('ID_typeContrat')->on('type_contrat');
             $table->decimal('Prix', 10, 2)->nullable();
             $table->foreignId('ID_locataire')->nullable()->references('ID_locataire')->on('locataires');
             $table->foreignId('ID_user')->references('ID_user')->on('users');

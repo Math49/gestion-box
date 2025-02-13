@@ -70,6 +70,17 @@
                             <input type="date" name="Date_fin" id="Date_fin" required
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300">
                         </div>
+
+                        <div>
+                            <label for="type_id" class="block text-gray-700 font-medium mb-2">Type de Contrat :</label>
+                            <select name="type_id" id="type_id" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300">
+                                <option value="">-- Sélectionner un type --</option>
+                                @foreach ($typesContrats as $type)
+                                    <option value="{{ $type->id }}">{{ ucfirst($type->nom) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
 
                     <!-- Bouton de validation -->
