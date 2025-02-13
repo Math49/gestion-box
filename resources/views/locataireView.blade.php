@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-lg rounded-xl p-8 border border-gray-200">
 
                 <!-- Bouton "Créer un locataire" -->
@@ -30,6 +30,7 @@
                                     <th class="border border-gray-300 px-4 py-2">Téléphone</th>
                                     <th class="border border-gray-300 px-4 py-2">Email</th>
                                     <th class="border border-gray-300 px-4 py-2">Box Loué</th>
+                                    <th class="border border-gray-300 px-4 py-2">Paiement</th>
                                     <th class="border border-gray-300 px-4 py-2 text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -62,7 +63,6 @@
                                                     @endforeach
                                                 </select>
 
-
                                                 <!-- Bouton de validation -->
                                                 <button type="submit"
                                                     class="!bg-blue-600 hover:!bg-blue-700 !text-white font-semibold !px-4 !py-2 !rounded-md transition duration-300">
@@ -71,9 +71,29 @@
                                             </form>
                                         </td>
 
-                                        <!-- Bouton Modifier -->
+                                        <!-- Statut de paiement -->
                                         <td class="border border-gray-300 px-4 py-2 text-center">
-                                            <a href="{{route('locataire.view', $locataire->ID_locataire)}}"
+                                            @php
+                                                $paiementEffectue = $locataire->payements()
+                                                    ->whereMonth('Date_payement', now()->month)
+                                                    ->whereYear('Date_payement', now()->year)
+                                                    ->exists();
+                                            @endphp
+
+                                            @if ($paiementEffectue)
+                                                <span class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                                                    Payé
+                                                </span>
+                                            @else
+                                                <span class="bg-red-500 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                                                    Non payé
+                                                </span>
+                                            @endif
+                                        </td>
+
+                                        <!-- Bouton Voir -->
+                                        <td class="border border-gray-300 px-4 py-2 text-center">
+                                            <a href="{{ route('locataire.view', $locataire->ID_locataire) }}"
                                                 class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded-md shadow transition duration-300">
                                                 ✏️ View
                                             </a>

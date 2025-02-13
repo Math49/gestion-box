@@ -12,18 +12,20 @@ class LocataireController extends Controller
 
     public function LocatairesByUser(Request $request)
     {
-        try{
+        try {
             $user = $request->user();
-            $locataires = $user->locataires;
+            $locataires = $user->locataires()->with('payements')->get();
             $boxs = $user->boxs;
+            
             return view('locataireView', [
                 'locataires' => $locataires,
                 'boxs' => $boxs
             ]);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return redirect()->back()->with('error', 'An error occurred');
         }
     }
+
 
     public function create(Request $request)
     {

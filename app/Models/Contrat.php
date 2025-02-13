@@ -17,6 +17,8 @@ class Contrat extends Model
         'ID_locataire',
         'ID_box',
         'ID_user',
+        'Status',
+        'Lien'
     ];
 
     public function locataire()
