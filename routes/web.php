@@ -24,6 +24,8 @@ Route::middleware('auth')->group(function (){
     Route::get('/box/add', [BoxController::class, 'createBox'])->name('box.add');
     Route::post('/box/add', [BoxController::class, 'storeBox'])->name('box.create');
     Route::get('/box/{id}', [BoxController::class, 'viewBox'])->name('box.view');
+    Route::get('/box/{id}/edit', [BoxController::class, 'updateBox'])->name('box.edit');
+    Route::put('/box/{id}/edit', [BoxController::class, 'editBox'])->name('box.update');
 });
 
 require __DIR__.'/auth.php';

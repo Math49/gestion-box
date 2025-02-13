@@ -27,6 +27,17 @@ class BoxController extends Controller
         return view('createBox');
     }
 
+    public function updateBox(Request $request,$id){
+        try{
+            $box = Box::find($id);
+            return view('boxEdit', [
+                'box' => $box
+            ]);
+        }catch(Exception $e){
+            return redirect()->back()->with('error', 'An error occurred');
+        }
+    }
+
     public function storeBox(Request $request)
     {
         try{
@@ -55,8 +66,21 @@ class BoxController extends Controller
         try{
             $box = Box::find($id);
 
+            if($box == null){
+                return redirect()->back()->with('error', 'Box not found');
+            }
+
+            if(!$box->ID_locataire){
+                return view('boxView', [
+                    'box' => $box,
+                ]);
+            }
+
+            $locataire = $box->locataire;
+
             return view('boxView', [
-                'box' => $box
+                'box' => $box,
+                'locataire' => $locataire
             ]);
         }catch(Exception $e){
             return redirect()->back()->with('error', 'An error occurred');
