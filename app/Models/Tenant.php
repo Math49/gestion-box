@@ -5,24 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Box extends Model
+class Tenant extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_box';
-    protected $table = 'boxes';
+    protected $primaryKey = 'id_tenant';
 
     protected $fillable = [
         'name',
+        'firstname',
+        'email',
+        'phone',
         'address',
-        'description',
-        'price',
-        'id_owner',
+        'data_owner_id'
     ];
 
     public function owner()
     {
-        return $this->belongsTo(User::class, 'id_owner');
+        return $this->belongsTo(User::class, 'data_owner_id', 'id_user');
     }
-    
 }
