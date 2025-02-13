@@ -42,4 +42,24 @@ class LocataireController extends Controller
         }
     }
 
+    public function updateLocataire(Request $request,$id){
+        try{
+            $locataire = Locataire::find($id);
+            
+            $locataire->Nom = $request->input('name') ? $request->input('name') : $locataire->Nom;
+            $locataire->Prenom = $request->input('prenom') ? $request->input('prenom') : $locataire->Prenom;
+            $locataire->Adresse = $request->input('address') ? $request->input('address') : $locataire->Adresse;
+            $locataire->Telephone = $request->input('telephone') ? $request->input('telephone') : $locataire->Telephone;
+            $locataire->Email = $request->input('email') ? $request->input('email') : $locataire->Email;
+            $locataire->bancaire = $request->input('bancaire') ? $request->input('bancaire') : $locataire->bancaire;
+
+            $locataire->save();
+
+            return redirect()->route('dashboard');
+
+        }catch(Exception $e){
+            return redirect()->back()->with('error', 'An error occurred');
+        }
+    }
+
 }

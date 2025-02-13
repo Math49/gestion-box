@@ -104,6 +104,8 @@ class BoxController extends Controller
             $box->Type = $request->input('type');
             $box->Prix = $request->input('price') ? $request->input('price') : $box->Prix;
 
+            $box->ID_locataire = $request->input('locataire') ? $request->input('locataire') : $box->ID_locataire;
+
             $box->save();
 
             return redirect()->route('dashboard')->with('success', 'Box updated successfully');
