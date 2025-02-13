@@ -22,4 +22,5 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             cd ${{ secrets.PROJECT_PATH }}
+            git config --global --add safe.directory $PWD
             git pull
