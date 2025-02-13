@@ -13,7 +13,7 @@
                     + Créer une nouvelle box
                 </a>
 
-                <h2 class="font-semibold text-2xl text-gray-800 mb-6">Vos boxs</h2>
+                <h2 class="font-semibold text-2xl text-gray-800 mb-6">Vos boxs de con</h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @if ($boxs)
