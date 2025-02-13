@@ -15,9 +15,11 @@ class BoxController extends Controller
     {
         try{
             $user = $request->user();
-            $boxs = $user->boxs->with(['typeContrat'])->get();
+            $boxs = $user->boxs;
+            $typesContrat = TypeContrat::all();
             return view('dashboard', [
-                'boxs' => $boxs
+                'boxs' => $boxs,
+                'typesContrat' => $typesContrat
             ]);
         }catch(Exception $e){
             return redirect()->back()->with('error', 'An error occurred');
