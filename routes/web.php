@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function (){
 
     Route::get('/locataire', [LocataireController::class, 'LocatairesByUser'])->name('locataire');
     Route::put('/locataire/{id}/update-box', [BoxController::class, 'updateBoxLocataire'])->name('locataire.updateBox');
+    Route::get('/locataire/create', [LocataireController::class, 'create'])->name('locataire.create');
+    Route::post('/locataire/store', [LocataireController::class, 'createLocataire'])->name('locataire.store');
+
 
 });
 

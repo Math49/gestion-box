@@ -25,7 +25,10 @@ class LocataireController extends Controller
         }
     }
 
-    
+    public function create(Request $request)
+    {
+        return view('createLocataire');
+    }
 
 
     public function createLocataire(Request $request)
@@ -33,9 +36,9 @@ class LocataireController extends Controller
         try{
 
             $request->validate([
-                'name' => 'required',
+                'nom' => 'required',
                 'prenom' => 'required',
-                'address' => 'required',
+                'adresse' => 'required',
                 'telephone' => 'required',
                 'email' => 'required',
                 'bancaire' => 'required'
@@ -44,9 +47,9 @@ class LocataireController extends Controller
             $user = $request->user();
             
             $locataire = new Locataire([
-                'Nom' => $request->input('name'),
+                'Nom' => $request->input('nom'),
                 'Prenom' => $request->input('prenom'),
-                'Adresse' => $request->input('address'),
+                'Adresse' => $request->input('adresse'),
                 'Telephone' => $request->input('telephone'),
                 'Email' => $request->input('email'),
                 'bancaire' => $request->input('bancaire'),
@@ -54,10 +57,10 @@ class LocataireController extends Controller
             ]);
 
             $locataire->save();
-            return redirect()->route('dashboard');
+            return redirect()->route('locataire');
 
         }catch(Exception $e){
-            return redirect()->back()->with('error', 'An error occurred');
+            return dd($e);
         }
     }
 

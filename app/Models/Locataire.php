@@ -17,6 +17,7 @@ class Locataire extends Model
         'Adresse',
         'Telephone',
         'Email',
+        'bancaire',
         'ID_user',
     ];
 
