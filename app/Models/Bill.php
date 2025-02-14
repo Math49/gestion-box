@@ -15,7 +15,7 @@ class Bill extends Model
         'payement_price',
         'payement_date',
         'period_number',
-        'id_contract',        
+        'id_contract',
     ];
 
     public function contract()
