@@ -10,6 +10,7 @@ class ContractModel extends Model
     use HasFactory;
 
     protected $table = 'contract_models';
+    protected $primaryKey = 'id_contractModels';
     protected $fillable = [
         'name',
         'content',

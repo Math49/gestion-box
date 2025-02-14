@@ -14,6 +14,7 @@ class Contract extends Model
         'date_end',
         'date_start',
         'monthly_price',
+        'content',
         'id_box',
         'id_tenant',
         'id_user',

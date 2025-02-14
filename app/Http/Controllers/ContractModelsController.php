@@ -10,9 +10,9 @@ class ContractModelsController extends Controller
     // GET /contract_models - affiche tout
     public function ContractModelsByUser(Request $request)
     {
-        $contract_models = $request->user()->contract_models;
+        $contract_models = $request->user()->contractsModels;
 
-        return view('', [
+        return view('contract_models/index', [
             'contract_models' => $contract_models,
         ]);
     }
@@ -22,7 +22,7 @@ class ContractModelsController extends Controller
     {
         $contract_model = ContractModel::find($id);
 
-        return view('', [
+        return view('contract_models/show', [
             'contract_model' => $contract_model,
         ]);
     }
@@ -30,7 +30,7 @@ class ContractModelsController extends Controller
     // GET /contract_models/create - affiche le formulaire de création
     public function ContractModelCreate(Request $request)
     {
-        return view('');
+        return view('contract_models/create');
     }
 
     // POST /contract_models - enregistre un élément
@@ -46,10 +46,10 @@ class ContractModelsController extends Controller
         $contract_model = new ContractModel();
         $contract_model->name = $request->name;
         $contract_model->content = $request->content;
-        $contract_model->id_owner = $user->id;
+        $contract_model->id_owner = $user->id_user;
         $contract_model->save();
 
-        return redirect('');
+        return redirect()->route('contractModel.index');
     }
 
     // GET /contract_models/{id}/edit - affiche le formulaire d'édition
@@ -57,7 +57,7 @@ class ContractModelsController extends Controller
     {
         $contract_model = ContractModel::find($id);
 
-        return view('', [
+        return view('contract_models/edit', [
             'contract_model' => $contract_model,
         ]);
     }
@@ -76,10 +76,10 @@ class ContractModelsController extends Controller
 
         $contract_model->name = $request->name ? $request->name : $contract_model->name;
         $contract_model->content = $request->content ? $request->content : $contract_model->content;
-        $contract_model->id_owner = $user->id;
+        $contract_model->id_owner = $user->id_user;
         $contract_model->save();
 
-        return redirect('');
+        return redirect()->route('contractModel.index');
     }
 
     // DELETE /contract_models - supprime un élément
@@ -92,6 +92,6 @@ class ContractModelsController extends Controller
         $contract_model = ContractModel::find($request->id);
         $contract_model->delete();
 
-        return redirect('');
+        return redirect()->route('contractModel.index');
     }
 }

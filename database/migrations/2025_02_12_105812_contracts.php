@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_contract');
             $table->date('date_end');
             $table->date('date_start');
+            $table->text('content');
             $table->decimal('monthly_price', 10, 2);
             $table->foreignId('id_box')->references('id_box')->on('boxes');
             $table->foreignId('id_tenant')->references('id_tenant')->on('tenants');

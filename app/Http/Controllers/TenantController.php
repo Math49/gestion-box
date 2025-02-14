@@ -16,7 +16,7 @@ class TenantController extends Controller
         $contracts = $request->user()->contracts;
         $boxes = $request->user()->boxes;
 
-        return view('dashboard', [
+        return view('tenants/index', [
             'tenants' => $tenants,
             'contracts' => $contracts,
             'boxes' => $boxes,
@@ -27,9 +27,17 @@ class TenantController extends Controller
     {
         $tenant = Tenant::find($id);
         $contract = Contract::where('id_tenant', $id)->first();
+        if (!$contract) {
+            return view('tenants/show', [
+                'tenant' => $tenant,
+                'contract' => null,
+                'box' => null,
+            ]);
+        }
+        
         $box = $contract->box;
 
-        return view('', [
+        return view('tenants/show', [
             'tenant' => $tenant,
             'contract' => $contract,
             'box' => $box,
@@ -39,7 +47,7 @@ class TenantController extends Controller
     // GET /tenants/create - affiche le formulaire de création
     public function TenantCreate(Request $request)
     {
-        return view('');
+        return view('tenants/create');
     }
 
     // POST /tenants - enregistre un élément
@@ -61,10 +69,10 @@ class TenantController extends Controller
         $tenant->email = $request->email;
         $tenant->phone = $request->phone;
         $tenant->address = $request->address;
-        $tenant->id_data_owner = $user->id;
+        $tenant->data_owner_id = $user->id_user;
         $tenant->save();
 
-        return redirect('');
+        return redirect()->route('tenant.index');
     }
 
     // GET /tenants/{id}/edit - affiche le formulaire d'édition
@@ -72,7 +80,7 @@ class TenantController extends Controller
     {
         $tenant = Tenant::find($id);
 
-        return view('', [
+        return view('tenants/edit', [
             'tenant' => $tenant,
         ]);
     }
@@ -97,22 +105,22 @@ class TenantController extends Controller
         $tenant->email = $request->email ? $request->email : $tenant->email;
         $tenant->phone = $request->phone ? $request->phone : $tenant->phone;
         $tenant->address = $request->address ? $request->address : $tenant->address;
-        $tenant->id_data_owner = $user->id;
+        $tenant->data_owner_id = $user->id_user;
         $tenant->save();
 
-        return redirect('');
+        return redirect()->route('tenant.index');
     }
 
     // DELETE /tenants - supprime un élément
     public function TenantDestroy(Request $request)
     {
         $request->validate([
-            'id' => 'required',
+            'id_tenant' => 'required',
         ]);
 
-        $tenant = Tenant::find($request->id);
+        $tenant = Tenant::find($request->id_tenant);
         $tenant->delete();
 
-        return redirect('');
+        return redirect()->route('tenant.index');
     }
 }

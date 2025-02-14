@@ -15,7 +15,7 @@ class BoxController extends Controller
         $contracts = $request->user()->contracts;
         $tenants = $request->user()->tenants;
 
-        return view('dashboard', [
+        return view('boxes/index', [
             'boxes' => $boxes,
             'contracts' => $contracts,
             'tenants' => $tenants,
@@ -26,10 +26,13 @@ class BoxController extends Controller
     public function BoxByID(Request $request, $id)
     {
         $boxe = Box::find($id);
-        $contract = Contract::where('id_box', $id)->first();
-        $tenant = $contract->tenant;
+        $contract = Contract::where('id_box', $id)
+        ->where('date_end', '>=', now())
+        ->first();
 
-        return view('', [
+        $tenant = $contract ? $contract->tenant : null;
+
+        return view('boxes/show', [
             'box' => $boxe,
             'contract' => $contract,
             'tenant' => $tenant,
@@ -39,7 +42,7 @@ class BoxController extends Controller
     // GET /boxes/create - affiche le formulaire de création
     public function BoxCreate(Request $request)
     {
-        return view('');
+        return view('boxes/create');
     }
 
     // POST /boxes - enregistre un élément
@@ -62,7 +65,7 @@ class BoxController extends Controller
         $box->id_owner = $user->id_user;
         $box->save();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('box.index');
     }
 
     // GET /boxes/{id}/edit - affiche le formulaire d'édition
@@ -70,7 +73,7 @@ class BoxController extends Controller
     {
         $box = Box::find($id);
 
-        return view('', [
+        return view('boxes/edit', [
             'box' => $box,
         ]);
     }
@@ -95,19 +98,20 @@ class BoxController extends Controller
         $box->id_owner = $user->id_user;
         $box->save();
 
-        return redirect()->route('', ['id' => $id]);
+        return redirect()->route('box.index');
     }
 
     // DELETE /boxes - supprime un élément
-    public function BoxDestroy(Request $request, $id)
+    public function BoxDestroy(Request $request)
     {
         $request->validate([
-            'id' => 'required',
+            'id_box' => 'required',
         ]);
 
-        $box = Box::find($id);
+        $box = Box::find($request->id_box);
+        
         $box->delete();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('box.index');
     }
 }

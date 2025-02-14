@@ -16,18 +16,6 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('locataire')" :active="request()->routeIs('locataire')">
-                        {{ __('Locataire') }}
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('contrat.index')" :active="request()->routeIs('contrat.index')">
-                        {{ __('Contrat') }}
-                    </x-nav-link>
-                </div>
-                
             </div>
 
             <!-- Settings Dropdown -->
