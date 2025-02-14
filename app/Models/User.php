@@ -49,28 +49,19 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Get the boxes for the user.
-     */
-    public function boxs()
+    public function boxes()
     {
-        return $this->hasMany(Box::class, 'ID_user', 'ID_user');
+        return $this->hasMany(Box::class, 'id_owner', 'id_user');
     }
-    public function locataires()
+
+    public function tenants()
     {
-        return $this->hasMany(Locataire::class, 'ID_user', 'ID_user');
+        return $this->hasMany(Tenant::class, 'data_owner_id', 'id_user');
     }
-    public function payements()
+
+    public function contracts()
     {
-        return $this->hasMany(Payement::class, 'ID_user', 'ID_user');
-    }
-    public function factures()
-    {
-        return $this->hasMany(Facture::class, 'ID_user', 'ID_user');
-    }
-    public function contrats()
-    {
-        return $this->hasMany(Contrat::class, 'ID_user', 'ID_user');
+        return $this->hasMany(Contract::class, 'id_user', 'id_user');
     }
 
 }
