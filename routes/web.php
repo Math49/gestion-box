@@ -16,9 +16,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware('auth')->group(function (){
-    Route::get('/dashboard', [BoxController::class, 'BoxsByUser'])->name('dashboard');
-    
-    Route::get('/dashboard', [BoxController::class, ''])
+    Route::get('/dashboard', [BoxController::class, 'BoxesByUser'])->name('dashboard');
 
     
 

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class BoxController extends Controller
 {
     // GET /boxes - affiche tout
-    public function BoxsByUser(Request $request)
+    public function BoxesByUser(Request $request)
     {
         $boxes = $request->user()->boxes;
         $contracts = $request->user()->contracts;

@@ -5,13 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ContractModels extends Model
+class ContractModel extends Model
 {
     use HasFactory;
 
     protected $table = 'contract_models';
     protected $fillable = [
         'name',
-        'content'
+        'content',
+        'id_owner'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_owner');
+    }
 }

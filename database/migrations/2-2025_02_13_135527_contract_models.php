@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_contractModels');
             $table->string('name')->unique();
             $table->text('content');
+            $table->foreignId('id_owner')->references('id_user')->on('users');
             $table->timestamps();
         });
     }

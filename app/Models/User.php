@@ -64,4 +64,9 @@ class User extends Authenticatable
         return $this->hasMany(Contract::class, 'id_user', 'id_user');
     }
 
+    public function contractsModels()
+    {
+        return $this->hasMany(ContractModels::class, 'id_owner', 'id_user');
+    }
+
 }
