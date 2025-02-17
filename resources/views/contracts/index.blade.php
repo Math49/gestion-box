@@ -51,8 +51,9 @@
                                         <form action="{{ route('contract.destroy', $contract->id_contract) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
+                                            <input type="hidden" name="id_contract" value="{{ $contract->id_contract }}">
                                             <button type="submit"
-                                                class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-md shadow transition duration-300">
+                                                class="!bg-red-500 hover:!bg-red-600 text-white font-semibold !px-4 !py-2 rounded-md shadow transition duration-300">
                                                 Supprimer
                                             </button>
                                         </form>

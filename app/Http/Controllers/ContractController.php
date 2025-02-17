@@ -24,9 +24,17 @@ class ContractController extends Controller
     // ✅ GET /contracts/{id} - Affiche un contrat et ses factures
     public function ContractByID(Request $request, $id)
     {
-        $contract = Contract::with(['box', 'tenant', 'bills'])->findOrFail($id);
+        $contract = Contract::findOrFail($id);
+        $box = $contract->box;
+        $tenant = $contract->tenant;
+        $bills = $contract->bills()->get();
 
-        return view('contracts.show', compact('contract'));
+        return view('contracts.show', [
+            'contract' => $contract,
+            'box' => $box,
+            'tenant' => $tenant,
+            'bills' => $bills,
+        ]);
     }
 
     // ✅ GET /contracts/create - Affiche le formulaire de création
@@ -78,8 +86,7 @@ class ContractController extends Controller
 
         // 📆 Génération des factures mensuelles
         $start = now()->parse($request->input('date_start'));
-        $end = now()->parse($request->input('date_end'));
-        $periods = $start->diffInMonths($end);
+        $periods = ceil($start->diffInMonths(now()));
 
         if ($periods > 0) {
             for ($i = 1; $i <= $periods; $i++) {
@@ -129,9 +136,10 @@ class ContractController extends Controller
         return redirect()->route('contract.index')->with('success', 'Contrat mis à jour.');
     }
 
-    // ✅ DELETE /contracts/{id} - Supprime un contrat et ses factures
-    public function ContractDestroy($id)
+    // ✅ DELETE /contracts - Supprime un contrat et ses factures
+    public function ContractDestroy(Request $request)
     {
+        $id = $request->input('id_contract');
         $contract = Contract::with('bills')->findOrFail($id);
 
         // ❌ Suppression des factures associées
