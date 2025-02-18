@@ -18,6 +18,18 @@
 
                 <!-- Factures associées -->
                 <h3 class="text-xl font-semibold text-gray-800 mt-6">Factures Générées</h3>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-lg font-semibold text-gray-800">Liste des Factures</h2>
+
+                    <form action="{{ route('bill.store', $contract->id_contract) }}" method="POST">
+                        @csrf
+                        @method('POST')
+                        <button type="submit"
+                            class="!bg-blue-500 hover:!bg-blue-600 text-white font-semibold !px-4 !py-2 rounded-md shadow transition duration-300">
+                            + Créer une facture
+                        </button>
+                    </form>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse border border-gray-300 mt-2">
                         <thead>
@@ -31,34 +43,44 @@
                         </thead>
                         <tbody>
                             @foreach ($bills as $bill)
-                                <tr class="border border-gray-300">
-                                    <td class="border border-gray-300 px-4 py-2">{{ $bill->period_number }}</td>
-                                    <td class="border border-gray-300 px-4 py-2">{{ $bill->payement_price }}</td>
-                                    <td class="border border-gray-300 px-4 py-2">{{ $bill->creation_date }}</td>
-                                    <td class="border border-gray-300 px-4 py-2">{{ $bill->payement_date }}</td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center flex space-x-2">
-                                        @if(!$bill->payement_date)
-                                        <form action="{{ route('bill.pay', $bill->id_bill) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <input type="hidden" name="id" value="{{ $contract->id_contract }}">
-                                            <button type="submit"
-                                                class="!bg-red-500 hover:!bg-red-600 text-white font-semibold !px-4 !py-2 rounded-md shadow transition duration-300">
-                                                A Payer
-                                            </button>
-                                        </form>
-                                        @else
-                                        <a href=""
-                                            class="bg-green-400 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg transition duration-300">
-                                            Payé
-                                        </a>
-                                        @endif
-                                        <a href="{{ route('bill.downloadpdf', $bill->id_bill) }}"
-                                            class="bg-blue-400 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg transition duration-300">
-                                            Télécharger le PDF
-                                        </a>
-                                    </td>
-                                </tr>
+                            <tr class="border border-gray-300">
+                                <td class="border border-gray-300 px-4 py-2">{{ $bill->period_number }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $bill->payement_price }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $bill->creation_date }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $bill->payement_date }}</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center flex space-x-2">
+                                    @if(!$bill->payement_date)
+                                    <form action="{{ route('bill.pay', $bill->id_bill) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="id" value="{{ $contract->id_contract }}">
+                                        <button type="submit"
+                                            class="!bg-red-500 hover:!bg-red-600 text-white font-semibold !px-4 !py-2 rounded-md shadow transition duration-300">
+                                            A Payer
+                                        </button>
+                                    </form>
+                                    @else
+                                    <a href=""
+                                        class="bg-green-400 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg transition duration-300">
+                                        Payé
+                                    </a>
+                                    @endif
+                                    <a href="{{ route('bill.downloadpdf', $bill->id_bill) }}"
+                                        class="bg-blue-400 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg transition duration-300">
+                                        Télécharger le PDF
+                                    </a>
+                                    <form action="{{ route('bill.destroy') }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" name="id" value="{{ $bill->id_bill }}">
+                                        <input type="hidden" name="id_contract" value="{{ $contract->id_contract }}">
+                                        <button type="submit"
+                                            class="!bg-red-500 hover:!bg-red-600 text-white font-semibold !px-4 !py-2 rounded-md shadow transition duration-300">
+                                            Supprimer
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>

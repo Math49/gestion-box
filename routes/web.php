@@ -49,8 +49,10 @@ Route::prefix('contracts')->middleware(['auth'])->group(function () {
     Route::delete('/', [ContractController::class, 'ContractDestroy'])->name('contract.destroy');
     Route::get('{id}/download-pdf', [ContractController::class, 'DownloadPDF'])->name('contract.downloadpdf');
     
+    Route::post('/{id}/bills', [BillController::class, 'BillStore'])->name('bill.store');
     Route::put('bills/{id}/pay', [BillController::class, 'BillPay'])->name('bill.pay');
     Route::get('bills/{id}/download-pdf', [BillController::class, 'DownloadPDF'])->name('bill.downloadpdf');
+    Route::delete('/bill', [BillController::class,'BillDestroy'])->name('bill.destroy');
 });
 
 // Locataires

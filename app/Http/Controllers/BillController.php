@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Bill;
+use App\Models\Contract;
 
 class BillController extends Controller
 {
@@ -34,24 +35,26 @@ class BillController extends Controller
         return view('');
     }
     // POST /bills - enregistre un élément
-    public function BillStore(Request $request)
+    public function BillStore(Request $request, $id)
     {
-        $request->validate([
-            'payement_price' => 'required',
-            'payement_date' => 'required',
-            'period_number' => 'required',
-            'id_contract' => 'required',
-        ]);
+        $contract = Contract::find($id);
 
+        // champs de bill
+        // 'payement_price'
+        // 'creation_date'
+        // 'period_number'
+        // 'id_contract'
+
+        $bills = $contract->bills;
 
         $bill = new Bill();
-        $bill->payement_price = $request->payement_price;
-        $bill->payement_date = $request->payement_date;
-        $bill->period_number = $request->period_number;
-        $bill->id_contract = $request->id_contract;
+        $bill->id_contract = $id;
+        $bill->payement_price = $contract->monthly_price;
+        $bill->creation_date = now();
+        $bill->period_number = $bills->count() + 1;
         $bill->save();
 
-        return redirect('');
+        return redirect()->route('contract.show', $id);
     }
     // GET /bills/{id}/edit - affiche le formulaire d'édition
     public function BillEdit(Request $request, $id)
@@ -89,12 +92,13 @@ class BillController extends Controller
     {
         $request->validate([
             'id' => 'required',
+            'id_contract' => 'required',
         ]);
 
         $bill = Bill::find($request->id);
         $bill->delete();
 
-        return redirect('');
+        return redirect()->route('contract.show', $request->id_contract);
     }
 
     // PUT /bills/{id}/pay - met à jour la date de paiement
