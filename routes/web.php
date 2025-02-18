@@ -81,8 +81,9 @@ Route::prefix('')->middleware(['auth'])->group(function () {
     Route::post('/tax/calculate', [TaxController::class, 'calculate'])->name('tax.calculate');
     Route::get('/tax/download/{total_income}/{taxable_income}/{regime}', [TaxController::class, 'downloadPDF'])->name('tax.download');
     
-    Route::get('/export/payments', [ExportController::class, 'exportPayments'])->name('export.payments');
-    Route::get('/export/tenants', [ExportController::class, 'exportTenants'])->name('export.tenants');
+    Route::get('/export/payments', [BillController::class, 'exportCsv'])->name('export.payments');
+    Route::get('/export/tenants', [TenantController::class, 'exportCsv'])->name('export.tenants');
+
 
 });
 require __DIR__.'/auth.php';

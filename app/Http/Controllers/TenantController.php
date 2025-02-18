@@ -123,4 +123,36 @@ class TenantController extends Controller
 
         return redirect()->route('tenant.index');
     }
+
+    public function exportCsv()
+{
+    $tenants = Tenant::all();
+
+    $fileName = 'locataires_' . now()->format('Y-m-d_H-i-s') . '.csv';
+    $headers = [
+        "Content-Type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=$fileName",
+    ];
+
+    $handle = fopen('php://output', 'w');
+    fputcsv($handle, ['ID Locataire', 'Nom', 'Prénom', 'Email', 'Téléphone', 'Adresse']);
+
+    foreach ($tenants as $tenant) {
+        fputcsv($handle, [
+            $tenant->id_tenant,
+            $tenant->name,
+            $tenant->firstname,
+            $tenant->email,
+            $tenant->phone,
+            $tenant->address,
+        ]);
+    }
+
+    fclose($handle);
+
+    return response()->streamDownload(function () use ($handle) {
+        fclose($handle);
+    }, $fileName, $headers);
+}
+
 }

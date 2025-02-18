@@ -18,8 +18,9 @@
                     </a>
                     <a href="{{ route('export.payments') }}"
                     class="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-md shadow transition duration-300">
-                        📥 Export Paiements (Excel)
+                        📥 Exporter Paiements en CSV
                     </a>
+
 
                 </div>
 

@@ -118,4 +118,35 @@ class BillController extends Controller
 
         return $pdf->download('facture_' . $bill->id_bill . '.pdf');
     }
+
+    public function exportCsv()
+{
+    $bills = Bill::with('contract')->get();
+
+    $fileName = 'paiements_' . now()->format('Y-m-d_H-i-s') . '.csv';
+    $headers = [
+        "Content-Type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=$fileName",
+    ];
+
+    $handle = fopen('php://output', 'w');
+    fputcsv($handle, ['ID Paiement', 'Montant', 'Date de paiement', 'Période', 'ID Contrat']);
+
+    foreach ($bills as $bill) {
+        fputcsv($handle, [
+            $bill->id_bill,
+            $bill->payement_price,
+            $bill->payement_date,
+            $bill->period_number,
+            $bill->id_contract,
+        ]);
+    }
+
+    fclose($handle);
+
+    return response()->streamDownload(function () use ($handle) {
+        fclose($handle);
+    }, $fileName, $headers);
+}
+
 }
