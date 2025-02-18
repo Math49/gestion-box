@@ -57,6 +57,10 @@
                                                 Supprimer
                                             </button>
                                         </form>
+                                        <a href="{{ route('contract.downloadpdf', $contract->id_contract) }}"
+                                            class="bg-blue-400 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg transition duration-300">
+                                            Télécharger le PDF
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

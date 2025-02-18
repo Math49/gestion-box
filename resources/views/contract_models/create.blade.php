@@ -25,7 +25,16 @@
                         <input type="text" name="name" id="name" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300">
                     </div>
-
+                    <div class="mb-4">
+                        <p class="block text-gray-700 font-medium mb-2">Variables :</p>
+                        <div class="flex gap-2">
+                            <p>{NOM_LOCATAIRE}</p>
+                            <p>{PRENOM_LOCATAIRE}</p>
+                            <p>{ADRESSE_BOX}</p>
+                            <p>{DATE_DEBUT}</p>
+                            <p>{DATE_FIN}</p>
+                        </div>
+                    </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-2">Contenu :</label>
                         <div id="editorjs" class="px-4 py-2 border border-gray-300 rounded-lg"></div>

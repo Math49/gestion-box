@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BillController;
 use App\Http\Controllers\BoxController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\TenantController;
@@ -42,6 +43,10 @@ Route::prefix('contracts')->middleware(['auth'])->group(function () {
     Route::get('/{id}/edit', [ContractController::class, 'ContractEdit'])->name('contract.edit');
     Route::put('/{id}', [ContractController::class, 'ContractUpdate'])->name('contract.update');
     Route::delete('/', [ContractController::class, 'ContractDestroy'])->name('contract.destroy');
+    Route::get('{id}/download-pdf', [ContractController::class, 'DownloadPDF'])->name('contract.downloadpdf');
+    
+    Route::put('bills/{id}/pay', [BillController::class, 'BillPay'])->name('bill.pay');
+    Route::get('bills/{id}/download-pdf', [BillController::class, 'DownloadPDF'])->name('bill.downloadpdf');
 });
 
 // Locataires

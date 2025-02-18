@@ -14,6 +14,7 @@ class Bill extends Model
     protected $fillable = [
         'payement_price',
         'payement_date',
+        'creation_date',
         'period_number',
         'id_contract',
     ];

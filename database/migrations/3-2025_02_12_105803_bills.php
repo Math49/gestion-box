@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bills', function (Blueprint $table) {
-            $table->id('id_bills');
+            $table->id('id_bill');
             $table->decimal('payement_price', 10, 2);
-            $table->date('payement_date');
+            $table->date('payement_date')->nullable();
+            $table->date('creation_date');
             $table->integer('period_number');
             $table->foreignId('id_contract')->references('id_contract')->on('contracts');
             $table->timestamps();

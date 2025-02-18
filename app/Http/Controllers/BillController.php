@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Bill;
 
 class BillController extends Controller
@@ -94,5 +95,27 @@ class BillController extends Controller
         $bill->delete();
 
         return redirect('');
+    }
+
+    // PUT /bills/{id}/pay - met à jour la date de paiement
+    public function BillPay(Request $request, $id){
+        $request->validate([
+            'id'=> 'required',
+        ]);
+
+        $bill = Bill::find($id);
+        $bill->payement_date = now();
+        $bill->save();
+
+        return redirect()->route('contract.show', $request->id);
+    }
+
+    public function downloadPDF($id)
+    {
+        $bill = Bill::findOrFail($id)->load('contract.box', 'contract.tenant');
+
+        $pdf = PDF::loadView('bill-pdf', compact('bill'));
+
+        return $pdf->download('facture_' . $bill->id_bill . '.pdf');
     }
 }

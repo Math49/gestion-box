@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use Illuminate\Http\Request;
 use App\Models\Contract;
 use App\Models\ContractModel;
@@ -87,13 +89,23 @@ class ContractController extends Controller
         // 📆 Génération des factures mensuelles
         $start = now()->parse($request->input('date_start'));
         $periods = ceil($start->diffInMonths(now()));
+        $end = now()->parse($request->input('date_end'));
+
+        $start = $start->addMonths(-1);
 
         if ($periods > 0) {
-            for ($i = 1; $i <= $periods; $i++) {
+            for ($i = 0; $i <= $periods; $i++) {
+                $start->addMonths()->format('Y-m-d');
+
+                if ($start->greaterThanOrEqualTo(now()) && $start->greaterThanOrEqualTo($end)) {
+                    break;
+                }
+
                 Bill::create([
                     'payement_price' => $request->input('monthly_price'),
-                    'payement_date' => $start->addMonths($i)->format('Y-m-d'),
-                    'period_number' => $i,
+                    'creation_date' => $start,
+                    'payement_date' => null,
+                    'period_number' => $i + 1,
                     'id_contract' => $contract->id_contract,
                 ]);
             }
@@ -133,7 +145,7 @@ class ContractController extends Controller
             'monthly_price' => $request->monthly_price,
         ]);
 
-        return redirect()->route('contract.index')->with('success', 'Contrat mis à jour.');
+        return redirect()->route('contract.show', $id)->with('success', 'Contrat mis à jour.');
     }
 
     // ✅ DELETE /contracts - Supprime un contrat et ses factures
@@ -147,5 +159,69 @@ class ContractController extends Controller
         $contract->delete();
 
         return redirect()->route('contract.index')->with('success', 'Contrat supprimé.');
+    }
+
+    public function downloadPDF(Request $request, $id)
+    {
+        // Récupérer le contrat et charger ses relations
+        $contract = Contract::findOrFail($id)->load('box', 'tenant');
+
+        // Décoder le contenu JSON de l'éditeur
+        $contractContent = json_decode($contract->content, true);
+
+        // Convertir le contenu JSON en HTML
+        $htmlContent = $this->convertEditorJSToHTML($contractContent);
+
+        // Générer le PDF avec la vue
+        $pdf = PDF::loadView('contract-pdf', compact('contract', 'htmlContent'));
+
+        // Télécharger le fichier PDF
+        return $pdf->download('contrat_' . $contract->id_contract . '.pdf');
+    }
+
+    /**
+     * Convertit un contenu EditorJS en HTML propre
+     */
+    private function convertEditorJSToHTML($editorData)
+    {
+        $html = '';
+
+        foreach ($editorData['blocks'] as $block) {
+            switch ($block['type']) {
+                case 'paragraph':
+                    $html .= "<p>{$block['data']['text']}</p>";
+                    break;
+                case 'header':
+                    $html .= "<h{$block['data']['level']}>{$block['data']['text']}</h{$block['data']['level']}>";
+                    break;
+                case 'list':
+                    $tag = $block['data']['style'] === 'unordered' ? 'ul' : 'ol';
+                    $html .= "<{$tag}>";
+                    foreach ($block['data']['items'] as $item) {
+                        $html .= "<li>{$item}</li>";
+                    }
+                    $html .= "</{$tag}>";
+                    break;
+                case 'quote':
+                    $html .= "<blockquote>{$block['data']['text']}</blockquote>";
+                    break;
+                case 'table':
+                    $html .= "<table border='1' cellspacing='0' cellpadding='5'>";
+                    foreach ($block['data']['content'] as $row) {
+                        $html .= "<tr>";
+                        foreach ($row as $cell) {
+                            $html .= "<td>{$cell}</td>";
+                        }
+                        $html .= "</tr>";
+                    }
+                    $html .= "</table>";
+                    break;
+                default:
+                    $html .= "<p>{$block['data']['text']}</p>";
+                    break;
+            }
+        }
+
+        return $html;
     }
 }
