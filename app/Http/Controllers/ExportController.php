@@ -17,7 +17,7 @@ class ExportController extends Controller
      */
     public function exportPayments(Request $request)
     {
-        return Excel::download(new PaymentsExport(), 'paiements.xlsx');
+        return Excel::download(new PaymentsExport, 'paiements.xlsx');
     }
 
     /**
@@ -25,6 +25,6 @@ class ExportController extends Controller
      */
     public function exportTenants(Request $request)
     {
-        return Excel::download(new TenantsExport(), 'clients.csv', \Maatwebsite\Excel\Excel::CSV);
+        return Excel::download(new TenantsExport, 'clients.csv', \Maatwebsite\Excel\Excel::CSV);
     }
 }
