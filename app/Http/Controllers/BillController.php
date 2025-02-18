@@ -127,26 +127,29 @@ class BillController extends Controller
     $headers = [
         "Content-Type" => "text/csv",
         "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma" => "no-cache",
+        "Expires" => "0",
     ];
 
-    $handle = fopen('php://output', 'w');
-    fputcsv($handle, ['ID Paiement', 'Montant', 'Date de paiement', 'Période', 'ID Contrat']);
+    $callback = function () use ($bills) {
+        $handle = fopen('php://output', 'w');
+        fputcsv($handle, ['ID Paiement', 'Montant', 'Date de paiement', 'Période', 'ID Contrat']);
 
-    foreach ($bills as $bill) {
-        fputcsv($handle, [
-            $bill->id_bill,
-            $bill->payement_price,
-            $bill->payement_date,
-            $bill->period_number,
-            $bill->id_contract,
-        ]);
-    }
+        foreach ($bills as $bill) {
+            fputcsv($handle, [
+                $bill->id_bill,
+                $bill->payement_price,
+                $bill->payement_date,
+                $bill->period_number,
+                $bill->id_contract,
+            ]);
+        }
 
-    fclose($handle);
-
-    return response()->streamDownload(function () use ($handle) {
         fclose($handle);
-    }, $fileName, $headers);
+    };
+
+    return response()->stream($callback, 200, $headers);
 }
+
 
 }

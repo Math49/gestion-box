@@ -132,27 +132,29 @@ class TenantController extends Controller
     $headers = [
         "Content-Type" => "text/csv",
         "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma" => "no-cache",
+        "Expires" => "0",
     ];
 
-    $handle = fopen('php://output', 'w');
-    fputcsv($handle, ['ID Locataire', 'Nom', 'Prénom', 'Email', 'Téléphone', 'Adresse']);
+    $callback = function () use ($tenants) {
+        $handle = fopen('php://output', 'w');
+        fputcsv($handle, ['ID Locataire', 'Nom', 'Prénom', 'Email', 'Téléphone', 'Adresse']);
 
-    foreach ($tenants as $tenant) {
-        fputcsv($handle, [
-            $tenant->id_tenant,
-            $tenant->name,
-            $tenant->firstname,
-            $tenant->email,
-            $tenant->phone,
-            $tenant->address,
-        ]);
-    }
+        foreach ($tenants as $tenant) {
+            fputcsv($handle, [
+                $tenant->id_tenant,
+                $tenant->name,
+                $tenant->firstname,
+                $tenant->email,
+                $tenant->phone,
+                $tenant->address,
+            ]);
+        }
 
-    fclose($handle);
-
-    return response()->streamDownload(function () use ($handle) {
         fclose($handle);
-    }, $fileName, $headers);
+    };
+
+    return response()->stream($callback, 200, $headers);
 }
 
 }
