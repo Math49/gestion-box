@@ -24,3 +24,4 @@ jobs:
             cd ${{ secrets.PROJECT_PATH }}
             git config --global --add safe.directory $PWD
             git pull
+            composer install --no-dev --prefer-dist
