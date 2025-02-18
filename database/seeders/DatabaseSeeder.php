@@ -23,6 +23,12 @@ class DatabaseSeeder extends Seeder
             'password' => '123456789',
             'structure' => 'personnel',
         ]);
+        User::create([
+            'name' => 'Admin',
+            'email' => 'b@b.b',
+            'password' => '123456789',
+            'structure' => 'personnel',
+        ]);
 
         Box::create([
             'name' => 'Box 1',
