@@ -11,7 +11,7 @@
                 <h2 class="text-2xl font-semibold text-gray-800 mb-6">Bienvenue sur votre tableau de bord</h2>
 
                 <!-- Menu de Navigation -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                     <a href="{{ route('box.index') }}" class="block bg-blue-500 hover:bg-blue-600 text-white text-center font-semibold px-6 py-4 rounded-lg shadow-md transition duration-300">
                         📦 Gérer les Box
                     </a>
@@ -23,6 +23,9 @@
                     </a>
                     <a href="{{ route('contractModel.index') }}" class="block bg-purple-500 hover:bg-purple-600 text-white text-center font-semibold px-6 py-4 rounded-lg shadow-md transition duration-300">
                         📝 Modèles de Contrats
+                    </a>
+                    <a href="{{ route('tax.index') }}" class="block bg-red-500 hover:bg-red-600 text-white text-center font-semibold px-6 py-4 rounded-lg shadow-md transition duration-300">
+                        💰 Déclaration aux Impôts
                     </a>
                 </div>
             </div>

@@ -6,11 +6,15 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\ContractModelsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaxController;
+use App\Http\Controllers\ExportController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -71,4 +75,14 @@ Route::prefix('contract-models')->middleware(['auth'])->group(function () {
     Route::delete('/', [ContractModelsController::class, 'ContractModelDestroy'])->name('contractModel.destroy');
 });
 
+Route::prefix('')->middleware(['auth'])->group(function () {
+
+    Route::get('/tax', [TaxController::class, 'index'])->name('tax.index');
+    Route::post('/tax/calculate', [TaxController::class, 'calculate'])->name('tax.calculate');
+    Route::get('/tax/download/{total_income}/{taxable_income}/{regime}', [TaxController::class, 'downloadPDF'])->name('tax.download');
+    
+    Route::get('/export/payments', [ExportController::class, 'exportPayments'])->name('export.payments');
+    Route::get('/export/tenants', [ExportController::class, 'exportTenants'])->name('export.tenants');
+
+});
 require __DIR__.'/auth.php';
